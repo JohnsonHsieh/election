@@ -107,9 +107,10 @@ for(i in 1:3){
 }
 data_fb <- do.call(rbind, data_fb)
 data_fb_new <- data_fb
-data_fb_old <- read.csv("data_fb.csv")
+?read.csv
+data_fb_old <- read.csv("temp/data_fb.csv", fileEncoding="big5")
 data_fb_old$date <- as.POSIXct(data_fb_old$date)
-rbind(data_fb_old[1:15,], data_fb_new[1:5,])
+# rbind(data_fb_old[1:15,], data_fb_new[1:5,])
 id <- which(!data_fb_old[,1]%in%data_fb_new[,1])
 tmp <- rbind(data_fb_old[id,], data_fb_new)
 data_fb <- tmp[order(tmp$date, tmp$name),]
@@ -133,6 +134,7 @@ dat2 <- rbind(cbind(KP, est_score=KP.pred), cbind(LD, est_score=LD.pred))
 dat2 <- subset(dat2, date>"2014-09-15" & date <"2014-10-17")
 KP <- subset(dat2, name=="柯文哲")
 LD <- subset(dat2, name=="連勝文")
+write.csv(dat2, "data_merge.csv")
 
 library(ggplot2)
 library(splines)
