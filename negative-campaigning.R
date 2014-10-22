@@ -53,7 +53,7 @@ get_poll_table <- function(url){
   tables <- readHTMLTable(url)
   options(warn=1)
   poll <- tables[[7]]
-  colnames(poll) <- c("sources", "date", "柯文哲","連勝文","馮光遠", "陳永昌","未表態")
+  colnames(poll) <- c("sources", "date", "柯文哲","連勝文","馮光遠", "未表態")
   poll <- poll[-c(1, nrow(poll)),]
   poll$sources <- sub("[*]","", as.character(poll$sources))
   poll$date <- as.POSIXct(paste(substr(poll$date,1,4),substr(poll$date,6,7),substr(poll$date,9,10),sep="-"))
@@ -61,20 +61,18 @@ get_poll_table <- function(url){
   poll[,4] <- as.numeric(sub("%","",poll[,4]))
   poll[,5] <- suppressWarnings(as.numeric(sub("%","",poll[,5])))
   poll[,6] <- suppressWarnings(as.numeric(sub("%","",poll[,6])))
-  poll[,7] <- suppressWarnings(as.numeric(sub("%","",poll[,7])))
   poll[is.na(poll[,5]),5] <- 0
   poll[is.na(poll[,6]),6] <- 0
-  poll[is.na(poll[,7]),7] <- 0
   # poll[,3] <- round(poll$柯文哲 + 0.435*poll$未表態,2)
   # poll[,4] <- round(poll$連勝文 + 0.565*poll$未表態,2)
   # w <- 0.2644231
   # d <- 5
-  w <- 1-0.6892857
-  d <- 2
-  poll[,3] <- round(poll$柯文哲 + w * (poll$未表態-d),2)
-  poll[,4] <- round(poll$連勝文 + (1-w)*(poll$未表態-d),2)
-  #poll[,3] <- round(poll$柯文哲)
-  #poll[,4] <- round(poll$連勝文)
+  #w <- 1-0.6892857
+  #d <- 2
+  # poll[,3] <- round(poll$柯文哲 + w * (poll$未表態-d),2)
+  # poll[,4] <- round(poll$連勝文 + (1-w)*(poll$未表態-d),2)
+  poll[,3] <- round(poll$柯文哲)
+  poll[,4] <- round(poll$連勝文)
   poll <- melt(poll[, c("date","柯文哲","連勝文","馮光遠")], id="date")
   colnames(poll) <- c("date", "name", "score")
   poll  

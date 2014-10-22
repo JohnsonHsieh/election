@@ -1,6 +1,6 @@
 台北市長負面競選效益分析
 =======
-[DAY11] 台北市長負面競選效益分析
+[DAY11] 台北市長負面競選效益分析 (緣由:http://hackfoldr.org/5050/)
 
 http://readata.org/negative-campaigning/
 
